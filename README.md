@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Nextjs + React-testing-library로 배우는 모던 리액트 소프트웨어 테스트
 
-## Getting Started
+[Udemy 강의 링크](https://www.udemy.com/course/nextjs-react-testing-library-react/)
 
-First, run the development server:
+일시: 2021-03-25~
 
-```bash
-npm run dev
-# or
-yarn dev
+- 이 강의로 배울 수 있는 것
+
+  - TypeScript의 Nextjs 적용법
+  - Jest 및 Testing Library의 사용법
+
+- Jest는 이전에 [TDD 강의](https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-tdd)를 들어서 문법 사용에 위화감없이 적응 가능했음
+
+- Chapter 5: Testing of page navigation 강의를 듣던 도중에 테스트 케이스가 실패
+
+  - 서버 사이드에서 정적으로 렌더링된 페이지를 검사하는 것이므로 중간에 데이터를 바꾸면 테스트에서는 이전 데이터를 사용하기 때문에 에러를 리턴하게 됨
+
+- Chapter 7: Testing of getStaticProps/getStaticPaths 강의를 듣던 도중에 테스트 케이스가 실패
+  - 테스트 라이브러리에서 기본적으로 'https://jsonplaceholder.typicode.com/posts/?_limit=10'의 URL로 받아오는 데이터를 제공함
+
+```javascript
+//원래 코드
+const handlers = [
+  rest.get(
+    'https://jsonplaceholder.typicode.com/posts/?_limit=10',
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json([
+          {
+            userId: 1,
+            id: 1,
+            title: 'dummy title 1',
+            body: 'dummy body 1',
+          },
+          {
+            userId: 2,
+            id: 2,
+            title: 'dummy title 2',
+            body: 'dummy body 2',
+          },
+        ])
+      )
+    }
+  ),
+]
+// warn 메세지에 맞춰 수정한 코드
+const handlers = [
+  rest.get('/posts/', (req, res, ctx) => {
+    const query = req.url.searchParams
+    const _limit = query.get('_limit=10')
+    // query.get('1')로 입력하면 id가 1인 데이터를 가져옴
+  }),
+]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 따라서 더미 데이터가 아니라 실제 타이틀 'sunt aut facere(이하략)'과 같은 타이틀로 입력해야 함
+- body로 받아오는 텍스트가 완벽히 테스트 되지 않는 불편함이 있음
