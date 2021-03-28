@@ -17,6 +17,8 @@
 
 - Chapter 7: Testing of getStaticProps/getStaticPaths 강의를 듣던 도중에 테스트 케이스가 실패
   - 테스트 라이브러리에서 기본적으로 'https://jsonplaceholder.typicode.com/posts/?_limit=10'의 URL로 받아오는 데이터를 제공함
+  - 따라서 더미 데이터가 아니라 실제 타이틀 'sunt aut facere(이하략)'과 같은 타이틀로 입력해야 함
+  - body로 받아오는 텍스트가 완벽히 테스트 되지 않는 불편함이 있음
 
 ```javascript
 //원래 코드
@@ -54,5 +56,10 @@ const handlers = [
 ]
 ```
 
-- 따라서 더미 데이터가 아니라 실제 타이틀 'sunt aut facere(이하략)'과 같은 타이틀로 입력해야 함
-- body로 받아오는 텍스트가 완벽히 테스트 되지 않는 불편함이 있음
+### useSWR (Stale while revalidation)
+
+- useSWR을 사용할 때 주목해야 할 Options ([공식 문서 링크](https://swr.vercel.app/docs/options))
+  > **initialData**: initial data to be returned (note: This is per-hook) (details)
+  > **revalidateOnMount**: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
+  > **refreshInterval = 0**: polling interval (disabled by default) (details)
+  > **dedupingInterval = 2000**: dedupe requests with the same key in this time span
