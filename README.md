@@ -79,3 +79,5 @@ const handlers = [
 ### Vercel에 Deploy하기
 
 - Build & Development Settings에서 npm test && npm run build로 Override하면 테스트가 이루어지고 pass 했을 때에만 빌드 되도록 할 수 있다
+- ![image](https://user-images.githubusercontent.com/67398691/112775382-b4936a80-9077-11eb-92f9-23cf39a1dfdb.png)
+
