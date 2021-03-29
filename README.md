@@ -46,6 +46,14 @@ const handlers = [
     }
   ),
 ]
+/*
+[MSW] Found a redundant usage of query parameters in the request handler URL for "GET https://jsonplaceholder.typicode.com/todos/?_limit=10". Please match against a path instead, and access query parameters in the response resolver function:
+    
+    rest.get("/posts/", (req, res, ctx) => {
+      const query = req.url.searchParams
+      const _limit = query.get("_limit=10")
+    })      
+*/
 // warn 메세지에 맞춰 수정한 코드
 const handlers = [
   rest.get('/posts/', (req, res, ctx) => {
@@ -59,7 +67,11 @@ const handlers = [
 ### useSWR (Stale while revalidation)
 
 - useSWR을 사용할 때 주목해야 할 Options ([공식 문서 링크](https://swr.vercel.app/docs/options))
-  > **initialData**: initial data to be returned (note: This is per-hook) (details)
-  > **revalidateOnMount**: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
-  > **refreshInterval = 0**: polling interval (disabled by default) (details)
-  > **dedupingInterval = 2000**: dedupe requests with the same key in this time span
+  - **initialData**: initial data to be returned (note: This is per-hook) (details)
+  - **revalidateOnMount**: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
+  - **refreshInterval = 0**: polling interval (disabled by default) (details)
+  - **dedupingInterval = 2000**: dedupe requests with the same key in this time span
+
+### getByText와 findByText를 주의해서 사용하기 (3/29)
+
+[참고 페이지](https://blog.rhostem.com/posts/2020-10-15-beginners-guide-to-testing-react-2)
