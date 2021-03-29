@@ -75,3 +75,7 @@ const handlers = [
 ### getByText와 findByText를 주의해서 사용하기 (3/29)
 
 [참고 페이지](https://blog.rhostem.com/posts/2020-10-15-beginners-guide-to-testing-react-2)
+
+### Vercel에 Deploy하기
+
+- Build & Development Settings에서 npm test && npm run build로 Override하면 테스트가 이루어지고 pass 했을 때에만 빌드 되도록 할 수 있다
